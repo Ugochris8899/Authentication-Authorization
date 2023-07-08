@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 
 // to signup
-const createNewUser = async(req, res) =>{
+const userSignUp = async(req, res) =>{
     try {
         const {username, email, password} = req.body
         const salt = bcrypt.genSaltSync(10)
@@ -44,7 +44,7 @@ const userLogin = async(req,res) => {
 
         
         if(!checkUsername)
-       return res.json("Username not found or in-correct")
+       return res.json("Username or password not correct")
         const userPassword=req.body.password
         const checkPassword = bcrypt.compareSync(userPassword, checkUsername.password)
         if(!checkPassword)
@@ -108,7 +108,7 @@ const Admin = async(req, res) =>{
         const Admin = await userModel.findByIdAndUpdate(adminId,{isAdmin: true}, {new:true})
         
         res.status(201).json({
-            message: "Admin created successfully",
+            message: "Admin updated successfully",
             data: Admin
         })
     } catch (error) {
@@ -164,7 +164,7 @@ const deleteUser = async(req, res) =>{
 
 
 module.exports = {
-    createNewUser,
+    userSignUp,
     userLogin,
     oneUser,
     allUsers,

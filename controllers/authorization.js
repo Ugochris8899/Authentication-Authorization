@@ -30,7 +30,7 @@ exports.checkUser = async(req, res, next) =>{
         if(users.isAdmin){
             next()
         } else {
-            res.json("you are not authorized to perform this operation @")
+            res.json("you are not authorized to perform this operation ")
         }
     })
 }
