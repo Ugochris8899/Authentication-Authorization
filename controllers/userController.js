@@ -87,6 +87,34 @@ const oneUser = async(req,res)=>{
    }
 }
 
+
+
+// to signout/logout 
+const signOut = async(req, res) =>{
+    try {
+        const userId = req.params.id;
+        //update the user's token to null
+        const user = await userModel.findByIdAndUpdate(userId, {token:null}, {new:true});
+        if(!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+        // console.log(user.token)
+        res.status(200).json({
+            message: "User logged out successfully",
+            data: user
+        })
+    } catch (error) {
+        res.status(500).json({
+            Error:error.message,
+        })
+    }
+}
+
+
+
+
 const allUsers = async(req,res)=>{
     try {
         const users = await userModel.find()
@@ -117,7 +145,7 @@ const Admin = async(req, res) =>{
         })
     }
 }
-    // update
+    // to update a user information as an admin
 const update = async(req, res) =>{
     try {
         const userId = req.params.userId;
@@ -166,6 +194,7 @@ const deleteUser = async(req, res) =>{
 module.exports = {
     userSignUp,
     userLogin,
+    signOut,
     oneUser,
     allUsers,
     Admin,

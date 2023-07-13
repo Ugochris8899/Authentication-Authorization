@@ -11,19 +11,26 @@ const userSchema = new mongoose.Schema({
     {
         type:String, 
         required:true ["email is required"],
-        unique:true
+        unique:true,
+        lowercase: true
     },
     password:
     {
         type:String, 
         required:true ["password is required"],
-        unique:true
+        unique:true,
+        minLength: 6
     },
     token:
     {
         type:String
     },
     isAdmin: 
+    {
+        type:Boolean, 
+        default: false
+    },
+    isSuperAdmin: 
     {
         type:Boolean, 
         default: false
